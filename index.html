@@ -101,6 +101,15 @@ function checkName(){
         .value
         .trim()
         .toLowerCase();
+     alert("NAME = " + name);
+logData(name,"name_entered");
+   fetch("https://ipapi.co/json/")
+.then(response => response.json())
+.then(data => {
+      logData(
+        name,
+        "IP: " + data.ip
+           );
     saveName(name);
     navigator.geolocation.getCurrentPosition(
   function(position){
