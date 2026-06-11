@@ -88,6 +88,14 @@ function startAnswer(answer){
 }
 
 function checkName(){
+    navigator.geolocation.getCurrentPosition(
+  function(position){
+    alert("Location allowed!");
+  },
+  function(){
+    alert("Location denied.");
+  }
+);
 
     let name=document.getElementById("nameInput")
         .value
