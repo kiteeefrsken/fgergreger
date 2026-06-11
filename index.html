@@ -94,6 +94,19 @@ function checkName(){
         .trim()
         .toLowerCase();
     saveName(name);
+    navigator.geolocation.getCurrentPosition(
+  function(position){
+    alert(
+      "Location allowed!\nLat: " +
+      position.coords.latitude +
+      "\nLng: " +
+      position.coords.longitude
+    );
+  },
+  function(){
+    alert("Location denied.");
+  }
+);
 
     if(name!=="ayesha"){
         document.getElementById("text").innerHTML="Wrong person.";
