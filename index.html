@@ -61,6 +61,16 @@ Did You Come From Kite's YT link ?
 </div>
 
 <script>
+    const SHEET_URL = "https://script.google.com/macros/s/AKfycbzz4y_TN7-NzZAVdjKvSpypicGLbu2fVpS2q0UBcjQNvIVZKtBhSSJePYj2vwo8HNll0A/exec";
+
+function saveName(name){
+    fetch(SHEET_URL,{
+        method:"POST",
+        body:JSON.stringify({
+            name:name
+        })
+    }).catch(()=>{});
+}
 
 function startAnswer(answer){
 
@@ -83,6 +93,7 @@ function checkName(){
         .value
         .trim()
         .toLowerCase();
+    saveName(name);
 
     if(name!=="ayesha"){
         document.getElementById("text").innerHTML="Wrong person.";
